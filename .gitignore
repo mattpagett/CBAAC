@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.env
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Sessions/secrets (if any get added)
+sesskey
+*.key
+*.pem
+
+# OS
+.DS_Store
+Thumbs.db
