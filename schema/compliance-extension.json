@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbaac.org/schema/compliance-extension/v1",
+  "title": "NANDA AgentFacts Compliance Extension",
+  "description": "Extension to NANDA AgentFacts schema for regulatory and cultural compliance attestation",
+  "version": "1.0.0",
+
+  "type": "object",
+  "properties": {
+
+    "compliance_attestations": {
+      "type": "object",
+      "description": "Regulatory compliance declarations with links to detailed certifications",
+      "properties": {
+        
+        "jurisdictions": {
+          "type": "array",
+          "description": "List of jurisdictions this agent is certified for",
+          "items": {
+            "type": "object",
+            "required": ["jurisdiction", "compliant", "questionnaire_url"],
+            "properties": {
+              "jurisdiction": {
+                "type": "string",
+                "enum": ["EU", "Japan", "Korea", "USA", "UK", "Other"]
+              },
+              "compliant": {
+                "type": "boolean",
+                "description": "Does this agent attest compliance with this jurisdiction?"
+              },
+              "regulations": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Specific regulations covered",
+                "examples": [["GDPR", "EU AI Act"], ["APPI", "METI Guidelines"]]
+              },
+              "questionnaire_url": {
+                "type": "string",
+                "format": "uri",
+                "description": "Link to signed self-certification questionnaire"
+              },
+              "attestation_date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "expiry_date": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "third_party_audit": {
+                "type": "object",
+                "properties": {
+                  "auditor_name": { "type": "string" },
+                  "auditor_did": { "type": "string" },
+                  "audit_date": { "type": "string", "format": "date-time" },
+                  "report_url": { "type": "string", "format": "uri" },
+                  "signature": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+
+        "cultural_benchmarks": {
+          "type": "object",
+          "description": "Optional cultural competency and ethical certifications",
+          "properties": {
+            "certified": { "type": "boolean" },
+            "questionnaire_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "cultures_tested": {
+              "type": "array",
+              "items": { "type": "string" },
+              "examples": [["Japanese", "Korean", "German", "Brazilian"]]
+            },
+            "ethical_frameworks": {
+              "type": "array",
+              "items": { "type": "string" },
+              "examples": [["IEEE Ethically Aligned Design", "OECD AI Principles"]]
+            },
+            "behavioral_safeguards": {
+              "type": "object",
+              "properties": {
+                "prevents_unconsented_profiling": { "type": "boolean" },
+                "prevents_emotional_manipulation": { "type": "boolean" },
+                "anthropomorphization_limits": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "model_provider_compliance": {
+      "type": "object",
+      "description": "Compliance of the underlying AI model (GPAI/frontier model)",
+      "properties": {
+        "model_name": { "type": "string" },
+        "model_provider": { "type": "string" },
+        "model_provider_did": { "type": "string" },
+        "gpai_compliant": {
+          "type": "boolean",
+          "description": "Does the model comply with GPAI requirements?"
+        },
+        "gpai_risk_level": {
+          "type": "string",
+          "enum": ["standard", "systemic_risk"],
+          "description": "GPAI classification (systemic risk if >10^25 FLOPs)"
+        },
+        "model_card_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "training_data_disclosed": { "type": "boolean" },
+        "safety_evaluations_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+
+    "sub_agent_compliance": {
+      "type": "object",
+      "description": "Declared compliance of downstream agents this agent calls",
+      "properties": {
+        "declares_sub_agents": {
+          "type": "boolean",
+          "description": "Does this agent disclose its sub-agents?"
+        },
+        "sub_agents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "agent_id": { "type": "string" },
+              "agent_name": { "type": "string" },
+              "compliance_url": {
+                "type": "string",
+                "format": "uri",
+                "description": "Link to sub-agent's compliance attestation"
+              },
+              "jurisdictions_certified": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "sub_agent_policy": {
+          "type": "string",
+          "description": "Policy for sub-agent compliance",
+          "enum": ["all_must_comply", "best_effort", "not_enforced"]
+        }
+      }
+    },
+
+    "codebase_verification": {
+      "type": "object",
+      "description": "Verification that attestation matches current codebase",
+      "properties": {
+        "codebase_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "hash_at_attestation": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "verification_method": {
+          "type": "string",
+          "enum": ["self_signed", "third_party_signed", "tee_attested"]
+        },
+        "signature": { "type": "string" }
+      }
+    }
+  }
+}

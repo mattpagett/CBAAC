@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbaac.org/questionnaires/cultural-ethical/v1",
+  "title": "Cultural Competency & Ethical Standards Self-Certification Questionnaire",
+  "description": "Self-certification questionnaire for cultural appropriateness and ethical behavior",
+  "version": "1.0.0",
+  
+  "metadata": {
+    "type": "voluntary",
+    "purpose": "Company policy compliance, not legally mandated",
+    "last_updated": "2026-01-30"
+  },
+
+  "sections": {
+    "cultural_appropriateness": {
+      "title": "Cultural Appropriateness",
+      "questions": [
+        {
+          "id": "cult_01",
+          "text": "Has the agent been tested for cultural appropriateness in target markets?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "cult_02",
+          "text": "Which cultures/regions has the agent been tested for?",
+          "type": "multi_select",
+          "options": ["East Asia", "Southeast Asia", "South Asia", "Middle East", "Europe", "North America", "Latin America", "Africa", "Oceania"],
+          "required": false,
+          "depends_on": {"cult_01": true}
+        },
+        {
+          "id": "cult_03",
+          "text": "Does the agent use appropriate honorifics when communicating in languages that require them (e.g., Japanese keigo, Korean jondaenmal)?",
+          "type": "select",
+          "options": ["yes", "no", "not_applicable"],
+          "required": true
+        },
+        {
+          "id": "cult_04",
+          "text": "Has the agent been trained on culturally diverse data?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "cult_05",
+          "text": "Does the agent respect cultural norms around family information sharing (e.g., healthcare contexts)?",
+          "type": "select",
+          "options": ["yes", "no", "not_applicable"],
+          "required": false
+        }
+      ]
+    },
+
+    "behavioral_safeguards": {
+      "title": "Behavioral Safeguards",
+      "description": "Based on research documenting privacy violations and manipulation risks in AI systems",
+      "questions": [
+        {
+          "id": "behav_01",
+          "text": "Does the agent prevent unconsented user profiling (e.g., inferring gender, age, health status without explicit disclosure)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "behav_02",
+          "text": "Does the agent have safeguards against emotional manipulation (e.g., creating inappropriate emotional dependencies)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "behav_03",
+          "text": "Are there limits on anthropomorphization (e.g., preventing AI from appearing too human-like)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "behav_04",
+          "text": "Does the agent avoid making assumptions about users based on stereotypes?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "behav_05",
+          "text": "Has the agent been red-teamed for manipulative or deceptive behaviors?",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+
+    "inclusivity": {
+      "title": "Inclusivity & Accessibility",
+      "questions": [
+        {
+          "id": "incl_01",
+          "text": "Does the agent support multiple languages?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "incl_02",
+          "text": "Which languages are supported?",
+          "type": "text_array",
+          "required": false,
+          "depends_on": {"incl_01": true}
+        },
+        {
+          "id": "incl_03",
+          "text": "Has the agent been tested for bias across demographic groups?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "incl_04",
+          "text": "Does the agent accommodate users with disabilities (e.g., screen reader compatibility)?",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+
+    "environmental": {
+      "title": "Environmental Responsibility",
+      "questions": [
+        {
+          "id": "env_01",
+          "text": "Is the carbon footprint / energy usage of the agent documented?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "env_02",
+          "text": "Estimated energy consumption per 1000 requests (kWh)",
+          "type": "number",
+          "required": false,
+          "depends_on": {"env_01": true}
+        },
+        {
+          "id": "env_03",
+          "text": "Does the provider use renewable energy for compute?",
+          "type": "select",
+          "options": ["yes", "partially", "no", "unknown"],
+          "required": false
+        }
+      ]
+    },
+
+    "ethical_benchmarks": {
+      "title": "Ethical Benchmarks & Certifications",
+      "questions": [
+        {
+          "id": "ethics_01",
+          "text": "Has the agent been evaluated against any ethical AI benchmarks?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "ethics_02",
+          "text": "Which benchmarks/frameworks?",
+          "type": "multi_select",
+          "options": ["IEEE Ethically Aligned Design", "OECD AI Principles", "UNESCO AI Ethics", "ISO/IEC 42001", "NIST AI RMF", "Other"],
+          "required": false,
+          "depends_on": {"ethics_01": true}
+        },
+        {
+          "id": "ethics_03",
+          "text": "Third-party ethical audit conducted?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "ethics_04",
+          "text": "Auditor name and date",
+          "type": "text",
+          "required": false,
+          "depends_on": {"ethics_03": true}
+        }
+      ]
+    }
+  },
+
+  "attestation": {
+    "completed_by": "",
+    "role": "",
+    "date": "",
+    "signature": "",
+    "codebase_hash": ""
+  }
+}

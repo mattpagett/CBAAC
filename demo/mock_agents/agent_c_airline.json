@@ -1,0 +1,66 @@
+{
+  "@context": [
+    "https://spec.projectnanda.org/agentfacts/v1",
+    "../schema/compliance-extension.json"
+  ],
+
+  "id": "nanda:airlinebot-001",
+  "agent_name": "urn:agent:skyairlines:AirlineBot",
+  "label": "AirlineBot",
+  "description": "Airline booking and customer service agent",
+  "version": "2.0.0",
+
+  "provider": {
+    "name": "Sky Airlines",
+    "url": "https://skyairlines.com",
+    "did": "did:web:skyairlines.com"
+  },
+
+  "compliance_attestations": {
+    "jurisdictions": [
+      {
+        "jurisdiction": "EU",
+        "compliant": true,
+        "automated_verification": true,
+        "regulations": ["GDPR", "EU AI Act"],
+        "attestation_date": "2025-12-01T00:00:00Z",
+        "attestation_type": "third_party_audit",
+        "auditor": "TechNova Partners",
+        "questionnaire_url": "../../questionnaires/eu-gdpr-aiact.json"
+      },
+      {
+        "jurisdiction": "Japan",
+        "compliant": true,
+        "regulations": ["APPI", "METI Guidelines"],
+        "attestation_date": "2025-11-15T00:00:00Z",
+        "attestation_type": "self_certified",
+        "questionnaire_url": "../../questionnaires/japan-appi-meti.json"
+      }
+    ],
+    "cultural_benchmarks": {
+      "certified": true,
+      "benchmarks": ["japan_honorifics", "multilingual_support"],
+      "certification_url": "https://skyairlines.com/.well-known/compliance/cultural.json"
+    }
+  },
+
+  "model_provider_compliance": {
+    "provider_name": "OpenAI",
+    "model_name": "gpt-4o",
+    "gpai_compliant": true,
+    "gpai_attestation_url": "https://openai.com/compliance/gpai",
+    "frontier_risk_level": "standard"
+  },
+
+  "sub_agent_compliance": {
+    "uses_sub_agents": false,
+    "declared_sub_agents": [],
+    "undeclared_sub_agents_possible": false
+  },
+
+  "codebase_verification": {
+    "current_hash": "sha256:def789abc123456789012345678901234567890abcdef1234567890abcdef789",
+    "hash_at_attestation": "sha256:def789abc123456789012345678901234567890abcdef1234567890abcdef789",
+    "last_updated": "2025-11-20T00:00:00Z"
+  }
+}

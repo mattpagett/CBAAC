@@ -1,0 +1,103 @@
+{
+  "@context": [
+    "https://spec.projectnanda.org/agentfacts/v1",
+    "https://cbaac.org/schema/compliance-extension/v1"
+  ],
+
+  "id": "nanda:acme-travel-agent-001",
+  "agent_name": "urn:agent:acme:TravelBookingAssistant",
+  "label": "ACME Travel Booking Assistant",
+  "description": "AI agent for corporate travel booking and expense management",
+  "version": "2.1.0",
+  "jurisdiction": "EU",
+
+  "provider": {
+    "name": "ACME Corp",
+    "url": "https://acme.com",
+    "did": "did:web:acme.com"
+  },
+
+  "endpoints": {
+    "static": ["https://api.acme.com/v1/travel-agent"],
+    "well_known_compliance": "https://acme.com/.well-known/agent-compliance.json"
+  },
+
+  "compliance_attestations": {
+    "jurisdictions": [
+      {
+        "jurisdiction": "EU",
+        "compliant": true,
+        "regulations": ["GDPR", "EU AI Act"],
+        "certification_level": "self_certified",
+        "questionnaire_url": "https://acme.com/.well-known/compliance/eu-gdpr-aiact.json",
+        "attestation_date": "2026-01-15T00:00:00Z",
+        "valid_until": "2027-01-15T00:00:00Z",
+        "signature": "eyJhbGciOiJFZERTQSIsInR5cCI6Ikp..."
+      },
+      {
+        "jurisdiction": "Japan",
+        "compliant": true,
+        "regulations": ["APPI", "METI AI Guidelines"],
+        "certification_level": "self_certified",
+        "questionnaire_url": "https://acme.com/.well-known/compliance/japan-appi-meti.json",
+        "attestation_date": "2026-01-15T00:00:00Z",
+        "valid_until": "2027-01-15T00:00:00Z",
+        "signature": "eyJhbGciOiJFZERTQSIsInR5cCI6Ik..."
+      }
+    ],
+
+    "cultural_benchmarks": {
+      "certified": true,
+      "benchmarks_passed": ["japanese_honorifics", "inclusive_language"],
+      "questionnaire_url": "https://acme.com/.well-known/compliance/cultural-ethical.json",
+      "attestation_date": "2026-01-10T00:00:00Z"
+    }
+  },
+
+  "model_provider_compliance": {
+    "model_name": "Claude 3.5 Sonnet",
+    "provider": "Anthropic",
+    "provider_did": "did:web:anthropic.com",
+    "gpai_compliant": true,
+    "gpai_classification": "general_purpose",
+    "systemic_risk": false,
+    "provider_attestation_url": "https://anthropic.com/.well-known/gpai-compliance.json"
+  },
+
+  "sub_agent_compliance": {
+    "declares_sub_agents": true,
+    "sub_agents": [
+      {
+        "agent_id": "nanda:skyline-airlines-booking-001",
+        "agent_name": "Skyline Airlines Booking Agent",
+        "provider": "Skyline Airlines",
+        "compliance_verified": true,
+        "compliance_url": "https://skyline-air.com/.well-known/agent-compliance.json",
+        "last_verified": "2026-01-20T00:00:00Z"
+      },
+      {
+        "agent_id": "nanda:globalhotels-reservation-001",
+        "agent_name": "GlobalHotels Reservation Agent",
+        "provider": "GlobalHotels Inc",
+        "compliance_verified": true,
+        "compliance_url": "https://globalhotels.com/.well-known/agent-compliance.json",
+        "last_verified": "2026-01-20T00:00:00Z"
+      }
+    ],
+    "policy": "all_sub_agents_must_be_compliant"
+  },
+
+  "codebase_verification": {
+    "codebase_hash": "sha256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
+    "hash_algorithm": "sha256",
+    "last_hash_update": "2026-01-15T00:00:00Z",
+    "attestation_hash_match": true
+  },
+
+  "certification": {
+    "level": "self_certified",
+    "issuer": "did:web:acme.com",
+    "issuance_date": "2026-01-15T00:00:00Z",
+    "expiration_date": "2027-01-15T00:00:00Z"
+  }
+}

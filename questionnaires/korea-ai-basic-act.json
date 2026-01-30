@@ -1,0 +1,374 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbaac.org/questionnaires/korea-ai-basic-act/v1",
+  "title": "Korea AI Basic Act Self-Certification Questionnaire",
+  "description": "Self-certification questionnaire for Korea regulatory compliance",
+  "version": "1.0.0",
+  
+  "metadata": {
+    "jurisdiction": "Republic of Korea",
+    "regulations": ["AI Basic Act", "PIPA (Personal Information Protection Act)"],
+    "last_updated": "2026-01-30",
+    "reference_url": "https://aibasicact.kr/"
+  },
+
+  "sections": {
+    "risk_classification": {
+      "title": "AI Basic Act - Risk Classification",
+      "questions": [
+        {
+          "id": "kr_01",
+          "question": "What is the risk classification of this AI system under the AI Basic Act?",
+          "type": "select",
+          "options": ["high_risk", "general", "minimal"],
+          "required": true,
+          "guidance": "High-risk includes: critical infrastructure, employment decisions, law enforcement, education assessment, credit scoring"
+        },
+        {
+          "id": "kr_02",
+          "question": "Does this AI system fall under any high-risk category?",
+          "type": "multi_select",
+          "options": [
+            "critical_infrastructure",
+            "employment_hr",
+            "education_assessment",
+            "law_enforcement",
+            "immigration_border",
+            "credit_financial",
+            "healthcare_diagnosis",
+            "none"
+          ],
+          "required": true
+        },
+        {
+          "id": "kr_03",
+          "question": "Has the system been registered with the relevant authority (if high-risk)?",
+          "type": "boolean",
+          "required": false,
+          "conditional": "kr_01 == 'high_risk'"
+        }
+      ]
+    },
+
+    "pipa_data_protection": {
+      "title": "PIPA - Data Protection",
+      "questions": [
+        {
+          "id": "kr_10",
+          "question": "What types of personal information does this agent process?",
+          "type": "multi_select",
+          "options": [
+            "name",
+            "resident_registration_number",
+            "contact_info",
+            "location_data",
+            "financial_info",
+            "health_info",
+            "biometric_data",
+            "none"
+          ],
+          "required": true
+        },
+        {
+          "id": "kr_11",
+          "question": "Does the agent process sensitive information (health, beliefs, genetics, criminal history)?",
+          "type": "boolean",
+          "required": true,
+          "guidance": "PIPA requires explicit consent for sensitive information"
+        },
+        {
+          "id": "kr_12",
+          "question": "What is the legal basis for processing?",
+          "type": "select",
+          "options": [
+            "consent",
+            "contract_performance",
+            "legal_obligation",
+            "vital_interests",
+            "public_interest",
+            "legitimate_interests"
+          ],
+          "required": true
+        },
+        {
+          "id": "kr_13",
+          "question": "Is explicit consent obtained for personal information collection?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_14",
+          "question": "Is data primarily stored within Korea?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_15",
+          "question": "If data is transferred overseas, are appropriate safeguards in place?",
+          "type": "boolean",
+          "required": false,
+          "conditional": "kr_14 == false"
+        },
+        {
+          "id": "kr_16",
+          "question": "Data retention period (days)?",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+
+    "user_rights": {
+      "title": "Data Subject Rights (PIPA)",
+      "questions": [
+        {
+          "id": "kr_20",
+          "question": "Is there an endpoint for data access requests?",
+          "type": "url",
+          "required": true
+        },
+        {
+          "id": "kr_21",
+          "question": "Is there an endpoint for data correction requests?",
+          "type": "url",
+          "required": true
+        },
+        {
+          "id": "kr_22",
+          "question": "Is there an endpoint for data deletion requests?",
+          "type": "url",
+          "required": true
+        },
+        {
+          "id": "kr_23",
+          "question": "Is there a mechanism to suspend processing upon request?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_24",
+          "question": "Can users withdraw consent easily?",
+          "type": "boolean",
+          "required": true
+        }
+      ]
+    },
+
+    "transparency": {
+      "title": "Transparency Requirements",
+      "questions": [
+        {
+          "id": "kr_30",
+          "question": "Does the agent disclose that users are interacting with AI?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_31",
+          "question": "Are AI-generated decisions clearly labeled as such?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_32",
+          "question": "Is there an explanation mechanism for automated decisions?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_33",
+          "question": "Is synthetic/generated content labeled?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_34",
+          "question": "Link to privacy policy (Korean language)?",
+          "type": "url",
+          "required": true
+        }
+      ]
+    },
+
+    "safety_and_reliability": {
+      "title": "Safety and Reliability (AI Basic Act)",
+      "questions": [
+        {
+          "id": "kr_40",
+          "question": "Has the AI system undergone safety testing?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_41",
+          "question": "Is there a mechanism for human oversight/intervention?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_42",
+          "question": "Has bias testing been conducted?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_43",
+          "question": "Is there an incident reporting mechanism?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_44",
+          "question": "Is there a documented process for addressing AI errors?",
+          "type": "boolean",
+          "required": true
+        }
+      ]
+    },
+
+    "security": {
+      "title": "Security Measures",
+      "questions": [
+        {
+          "id": "kr_50",
+          "question": "Is data encrypted at rest?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_51",
+          "question": "Is data encrypted in transit?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_52",
+          "question": "Is access control implemented?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_53",
+          "question": "Is audit logging enabled?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_54",
+          "question": "Is there a data breach notification process?",
+          "type": "boolean",
+          "required": true,
+          "guidance": "PIPA requires notification within 72 hours"
+        },
+        {
+          "id": "kr_55",
+          "question": "Has a security certification been obtained (e.g., ISMS-P)?",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+
+    "governance": {
+      "title": "Governance",
+      "questions": [
+        {
+          "id": "kr_60",
+          "question": "Name of data controller organization?",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "kr_61",
+          "question": "Data protection officer contact (CPO)?",
+          "type": "email",
+          "required": true
+        },
+        {
+          "id": "kr_62",
+          "question": "Has an AI impact assessment been conducted (if high-risk)?",
+          "type": "boolean",
+          "required": false,
+          "conditional": "kr_01 == 'high_risk'"
+        },
+        {
+          "id": "kr_63",
+          "question": "Are there documented AI ethics guidelines?",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+
+    "model_provider": {
+      "title": "AI Model Provider Compliance",
+      "questions": [
+        {
+          "id": "kr_70",
+          "question": "What foundation model powers this agent?",
+          "type": "text",
+          "required": true,
+          "examples": ["GPT-4", "Claude", "Gemini", "HyperCLOVA X", "Custom"]
+        },
+        {
+          "id": "kr_71",
+          "question": "Who is the model provider?",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "kr_72",
+          "question": "Is the model provider registered/compliant in Korea?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_73",
+          "question": "Does the model meet Korea's AI trustworthiness standards?",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+
+    "sub_agents": {
+      "title": "Sub-Agent Compliance Chain",
+      "questions": [
+        {
+          "id": "kr_80",
+          "question": "Does this agent call other agents/services?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "kr_81",
+          "question": "List sub-agents and their compliance attestation URLs",
+          "type": "array",
+          "items": {
+            "agent_id": "string",
+            "compliance_url": "url"
+          },
+          "required": false,
+          "conditional": "kr_80 == true"
+        },
+        {
+          "id": "kr_82",
+          "question": "Are all sub-agents verified as Korea-compliant?",
+          "type": "boolean",
+          "required": false,
+          "conditional": "kr_80 == true"
+        }
+      ]
+    }
+  },
+
+  "certification": {
+    "certifier_name": "",
+    "certifier_role": "",
+    "organization": "",
+    "date": "",
+    "signature": "",
+    "codebase_hash": "",
+    "valid_until": ""
+  }
+}

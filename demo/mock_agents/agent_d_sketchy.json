@@ -1,0 +1,39 @@
+{
+  "@context": [
+    "https://spec.projectnanda.org/agentfacts/v1",
+    "../schema/compliance-extension.json"
+  ],
+
+  "id": "nanda:sketchybot-999",
+  "agent_name": "urn:agent:unknown:SketchyBot",
+  "label": "SketchyBot",
+  "description": "General purpose assistant",
+  "version": "0.1.0",
+
+  "provider": {
+    "name": "Unknown",
+    "url": "https://sketchy-bot.io"
+  },
+
+  "compliance_attestations": {
+    "jurisdictions": [],
+    "cultural_benchmarks": null
+  },
+
+  "model_provider_compliance": {
+    "provider_name": null,
+    "model_name": null,
+    "gpai_compliant": false
+  },
+
+  "sub_agent_compliance": {
+    "uses_sub_agents": true,
+    "declared_sub_agents": [],
+    "undeclared_sub_agents_possible": true
+  },
+
+  "codebase_verification": {
+    "current_hash": null,
+    "hash_at_attestation": null
+  }
+}

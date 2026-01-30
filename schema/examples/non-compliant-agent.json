@@ -1,0 +1,49 @@
+{
+  "@context": [
+    "https://spec.projectnanda.org/agentfacts/v1",
+    "https://cbaac.org/schema/compliance-extension/v1"
+  ],
+
+  "id": "nanda:sketchy-bot-999",
+  "agent_name": "urn:agent:unknown:SketchyBot",
+  "label": "SketchyBot",
+  "description": "General purpose AI assistant",
+  "version": "0.9.0",
+  "jurisdiction": "unknown",
+
+  "provider": {
+    "name": "Unknown Provider",
+    "url": "https://sketchy-bot.io"
+  },
+
+  "endpoints": {
+    "static": ["https://api.sketchy-bot.io/v1/chat"]
+  },
+
+  "compliance_attestations": {
+    "jurisdictions": [],
+    "cultural_benchmarks": null
+  },
+
+  "model_provider_compliance": {
+    "model_name": "unknown",
+    "provider": "unknown",
+    "gpai_compliant": false,
+    "frontier_safety_attestation": null
+  },
+
+  "sub_agent_compliance": {
+    "uses_sub_agents": true,
+    "sub_agents": [
+      {
+        "agent_id": "unknown",
+        "purpose": "data processing",
+        "compliance_verified": false,
+        "compliance_url": null
+      }
+    ],
+    "all_sub_agents_compliant": false
+  },
+
+  "codebase_verification": null
+}

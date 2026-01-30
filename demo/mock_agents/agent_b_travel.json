@@ -1,0 +1,61 @@
+{
+  "@context": [
+    "https://spec.projectnanda.org/agentfacts/v1",
+    "../schema/compliance-extension.json"
+  ],
+
+  "id": "nanda:travelbot-001",
+  "agent_name": "urn:agent:travelcorp:TravelBot",
+  "label": "TravelBot",
+  "description": "Corporate travel booking agent",
+  "version": "3.2.1",
+
+  "provider": {
+    "name": "TravelCorp Inc",
+    "url": "https://travelcorp.com",
+    "did": "did:web:travelcorp.com"
+  },
+
+  "compliance_attestations": {
+    "jurisdictions": [
+      {
+        "jurisdiction": "EU",
+        "compliant": true,
+        "third_party_audit": true,
+        "regulations": ["GDPR", "EU AI Act"],
+        "attestation_date": "2026-01-15T00:00:00Z",
+        "attestation_type": "self_certified",
+        "questionnaire_url": "../../questionnaires/eu-gdpr-aiact.json"
+      }
+    ],
+    "cultural_benchmarks": null
+  },
+
+  "model_provider_compliance": {
+    "provider_name": "Anthropic",
+    "model_name": "claude-sonnet-4-20250514",
+    "gpai_compliant": true,
+    "gpai_attestation_url": "https://anthropic.com/compliance/gpai",
+    "frontier_risk_level": "standard"
+  },
+
+  "sub_agent_compliance": {
+    "uses_sub_agents": true,
+    "declared_sub_agents": [
+      {
+        "agent_id": "nanda:airlinebot-001",
+        "purpose": "Airline ticket booking",
+        "compliance_url": "https://airline.com/.well-known/compliance.json",
+        "compliance_verified": true,
+        "last_verified": "2026-01-20T00:00:00Z"
+      }
+    ],
+    "undeclared_sub_agents_possible": false
+  },
+
+  "codebase_verification": {
+    "current_hash": "sha256:abc123def456789012345678901234567890abcdef1234567890abcdef123456",
+    "hash_at_attestation": "sha256:abc123def456789012345678901234567890abcdef1234567890abcdef123456",
+    "last_updated": "2026-01-10T00:00:00Z"
+  }
+}

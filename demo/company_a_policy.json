@@ -1,0 +1,49 @@
+{
+  "$schema": "https://cbaac.org/schema/policy/v1",
+  "policy_name": "ACME Corp Agent Interaction Policy",
+  "version": "1.0.0",
+  "description": "Policy for verifying external agents before data sharing",
+
+  "regulatory_requirements": {
+    "required_jurisdictions": ["EU"],
+    "accepted_jurisdictions": ["EU", "Japan", "Korea", "USA"],
+    "blocked_jurisdictions": [],
+    
+    "require_gdpr_compliance": true,
+    "require_ai_act_compliance": true,
+    "max_attestation_age_days": 365,
+    
+    "require_codebase_hash": true,
+    "require_hash_match": true
+  },
+
+  "model_provider_requirements": {
+    "require_gpai_compliance": true,
+    "blocked_providers": [],
+    "require_provider_disclosed": true
+  },
+
+  "sub_agent_requirements": {
+    "require_sub_agent_disclosure": true,
+    "verify_sub_agent_compliance": true,
+    "max_chain_depth": 5
+  },
+
+  "cultural_requirements": {
+    "require_cultural_certification": false,
+    "required_benchmarks": []
+  },
+
+  "data_handling_requirements": {
+    "block_special_categories": true,
+    "require_erasure_endpoint": true,
+    "max_retention_days": 730,
+    "require_encryption": true
+  },
+
+  "on_failure": {
+    "action": "block",
+    "notify": ["compliance@acme.com"],
+    "log": true
+  }
+}
