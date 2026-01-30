@@ -15,6 +15,7 @@ venv/
 sesskey
 *.key
 *.pem
+*.sesskey
 
 # OS
 .DS_Store
