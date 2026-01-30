@@ -4,7 +4,7 @@
     "https://cbaac.org/schema/compliance-extension/v1"
   ],
 
-  "id": "nanda:sketchy-bot-999",
+  "id": "nanda:sample-noncompliant-999",
   "agent_name": "urn:agent:unknown:SketchyBot",
   "label": "SketchyBot",
   "description": "General purpose AI assistant",
@@ -13,11 +13,11 @@
 
   "provider": {
     "name": "Unknown Provider",
-    "url": "https://sketchy-bot.io"
+    "url": "https://sample-noncompliant.test"
   },
 
   "endpoints": {
-    "static": ["https://api.sketchy-bot.io/v1/chat"]
+    "static": ["https://api.sample-noncompliant.test/v1/chat"]
   },
 
   "compliance_attestations": {

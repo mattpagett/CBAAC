@@ -5,15 +5,15 @@
   ],
 
   "id": "nanda:airlinebot-001",
-  "agent_name": "urn:agent:skyairlines:AirlineBot",
+  "agent_name": "urn:agent:sample-c-airlines:AirlineBot",
   "label": "AirlineBot",
   "description": "Airline booking and customer service agent",
   "version": "2.0.0",
 
   "provider": {
     "name": "Sky Airlines",
-    "url": "https://skyairlines.com",
-    "did": "did:web:skyairlines.com"
+    "url": "https://sample-agent-c-airlines.test",
+    "did": "did:web:sample-agent-c-airlines.test"
   },
 
   "compliance_attestations": {
@@ -40,7 +40,7 @@
     "cultural_benchmarks": {
       "certified": true,
       "benchmarks": ["japan_honorifics", "multilingual_support"],
-      "certification_url": "https://skyairlines.com/.well-known/compliance/cultural.json"
+      "certification_url": "https://sample-agent-c-airlines.test/.well-known/compliance/cultural.json"
     }
   },
 

@@ -1,4 +1,4 @@
-# Agent Passport
+# CBAAC - Cross-Border Agentic AI Compliance
 
 **Embedding Regulatory and Cultural Compliance into Agentic Communication**
 
@@ -18,7 +18,7 @@ Existing frameworks like NANDA include a `jurisdiction` field but lack:
 
 ## Our Proposal
 
-Extend NANDA's AgentFacts schema with:
+Proposing an extension to NANDA AgentFacts with:
 - `compliance_attestations`: links to signed self-certification questionnaires
 - `sub_agent_compliance`: declared compliance of downstream agents
 - `model_provider_compliance`: GPAI/frontier model attestation

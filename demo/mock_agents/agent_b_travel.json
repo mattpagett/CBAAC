@@ -5,15 +5,15 @@
   ],
 
   "id": "nanda:travelbot-001",
-  "agent_name": "urn:agent:travelcorp:TravelBot",
+  "agent_name": "urn:agent:sample-b-travel:TravelBot",
   "label": "TravelBot",
   "description": "Corporate travel booking agent",
   "version": "3.2.1",
 
   "provider": {
-    "name": "TravelCorp Inc",
-    "url": "https://travelcorp.com",
-    "did": "did:web:travelcorp.com"
+    "name": "SAMPLE_AGENT_B_TRAVEL Corp",
+    "url": "https://sample-agent-b-travel.test",
+    "did": "did:web:sample-agent-b-travel.test"
   },
 
   "compliance_attestations": {
@@ -57,5 +57,18 @@
     "current_hash": "sha256:abc123def456789012345678901234567890abcdef1234567890abcdef123456",
     "hash_at_attestation": "sha256:abc123def456789012345678901234567890abcdef1234567890abcdef123456",
     "last_updated": "2026-01-10T00:00:00Z"
+  },
+
+  "third_party_audit": {
+    "auditor_org": "SAMPLE_AUDITOR TrustCert International",
+    "auditor_did": "did:web:sample-trustcert.test",
+    "auditor_accreditation": "EU-AI-AUD-2024-SAMPLE-0042",
+    "auditor_email": "auditor@sample-trustcert.test",
+    "audit_date": "2026-01-12T14:30:00Z",
+    "scope": ["GDPR", "EU AI Act Article 53"],
+    "findings": "No critical issues. Minor recommendations documented.",
+    "signature": "-----BEGIN SIGNATURE-----\nMEUCIQDKx3j8Qm5P2vR9Xc7LpZ4nW8kY1tG6hF3jN9mBsQ7vKAIgWcR4\nxT2pL8nM5kH7jD3fA6gB9eC1dE4iF2hG0kJ3lM5nO7pQ9rS=\n-----END SIGNATURE-----",
+    "public_key_url": "https://sample-trustcert.test/.well-known/keys/auditor-2024.pub",
+    "verification_status": "signed"
   }
 }

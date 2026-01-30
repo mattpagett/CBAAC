@@ -4,22 +4,22 @@
     "https://cbaac.org/schema/compliance-extension/v1"
   ],
 
-  "id": "nanda:acme-travel-agent-001",
-  "agent_name": "urn:agent:acme:TravelBookingAssistant",
-  "label": "ACME Travel Booking Assistant",
+  "id": "nanda:sample-compliant-agent-001",
+  "agent_name": "urn:agent:sample-compliant:TravelBookingAssistant",
+  "label": "SAMPLE_COMPLIANT Travel Booking Assistant",
   "description": "AI agent for corporate travel booking and expense management",
   "version": "2.1.0",
   "jurisdiction": "EU",
 
   "provider": {
-    "name": "ACME Corp",
-    "url": "https://acme.com",
-    "did": "did:web:acme.com"
+    "name": "SAMPLE_COMPLIANT Corp",
+    "url": "https://sample-compliant.test",
+    "did": "did:web:sample-compliant.test"
   },
 
   "endpoints": {
-    "static": ["https://api.acme.com/v1/travel-agent"],
-    "well_known_compliance": "https://acme.com/.well-known/agent-compliance.json"
+    "static": ["https://api.sample-compliant.test/v1/travel-agent"],
+    "well_known_compliance": "https://sample-compliant.test/.well-known/agent-compliance.json"
   },
 
   "compliance_attestations": {
@@ -29,7 +29,7 @@
         "compliant": true,
         "regulations": ["GDPR", "EU AI Act"],
         "certification_level": "self_certified",
-        "questionnaire_url": "https://acme.com/.well-known/compliance/eu-gdpr-aiact.json",
+        "questionnaire_url": "https://raw.githubusercontent.com/mattpagett/CBAAC/main/questionnaires/eu-gdpr-aiact.json",
         "attestation_date": "2026-01-15T00:00:00Z",
         "valid_until": "2027-01-15T00:00:00Z",
         "signature": "eyJhbGciOiJFZERTQSIsInR5cCI6Ikp..."
@@ -39,7 +39,7 @@
         "compliant": true,
         "regulations": ["APPI", "METI AI Guidelines"],
         "certification_level": "self_certified",
-        "questionnaire_url": "https://acme.com/.well-known/compliance/japan-appi-meti.json",
+        "questionnaire_url": "https://raw.githubusercontent.com/mattpagett/CBAAC/main/questionnaires/japan-appi-meti.json",
         "attestation_date": "2026-01-15T00:00:00Z",
         "valid_until": "2027-01-15T00:00:00Z",
         "signature": "eyJhbGciOiJFZERTQSIsInR5cCI6Ik..."
@@ -49,7 +49,7 @@
     "cultural_benchmarks": {
       "certified": true,
       "benchmarks_passed": ["japanese_honorifics", "inclusive_language"],
-      "questionnaire_url": "https://acme.com/.well-known/compliance/cultural-ethical.json",
+      "questionnaire_url": "https://raw.githubusercontent.com/mattpagett/CBAAC/main/questionnaires/cultural-ethical.json",
       "attestation_date": "2026-01-10T00:00:00Z"
     }
   },
@@ -96,7 +96,7 @@
 
   "certification": {
     "level": "self_certified",
-    "issuer": "did:web:acme.com",
+    "issuer": "did:web:sample-compliant.test",
     "issuance_date": "2026-01-15T00:00:00Z",
     "expiration_date": "2027-01-15T00:00:00Z"
   }

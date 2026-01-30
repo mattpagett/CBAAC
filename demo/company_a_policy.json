@@ -1,6 +1,6 @@
 {
   "$schema": "https://cbaac.org/schema/policy/v1",
-  "policy_name": "ACME Corp Agent Interaction Policy",
+  "policy_name": "SAMPLE_COMPANY_A Agent Interaction Policy",
   "version": "1.0.0",
   "description": "Policy for verifying external agents before data sharing",
 
@@ -43,7 +43,7 @@
 
   "on_failure": {
     "action": "block",
-    "notify": ["compliance@acme.com"],
+    "notify": ["compliance@sample-company-a.test"],
     "log": true
   }
 }

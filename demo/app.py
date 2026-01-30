@@ -68,6 +68,22 @@ app, rt = fast_app(hdrs=[Style("""
     a { color: #00d4ff; }
     .detail-panel th, .detail-panel td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
     .detail-panel th { background: #f0f0f0; }
+    .welcome { text-align: center; padding: 40px 20px; }
+    .welcome h1 { font-size: 48px; color: #00d4ff; margin-bottom: 10px; }
+    .welcome .tagline { font-size: 18px; color: #888; margin-bottom: 40px; }
+    .welcome .description { max-width: 700px; margin: 0 auto 50px; text-align: left; line-height: 1.8; color: #ccc; }
+    .path-cards { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
+    .path-card { background: #16213e; border: 2px solid #333; border-radius: 12px; padding: 30px; width: 320px; text-align: center; cursor: pointer; transition: all 0.3s; }
+    .path-card:hover { border-color: #00d4ff; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2); }
+    .path-card .icon { font-size: 48px; margin-bottom: 15px; }
+    .path-card h2 { color: #fff; margin-bottom: 10px; font-size: 20px; }
+    .path-card p { color: #888; font-size: 14px; line-height: 1.6; }
+    .path-card .action { margin-top: 20px; display: inline-block; background: #00d4ff; color: #000; padding: 10px 25px; border-radius: 6px; font-weight: bold; }
+    .auditor-section { background: #0f0f23; border: 1px solid #333; border-radius: 8px; padding: 20px; margin-top: 15px; }
+    .auditor-section h4 { color: #00d4ff; margin-top: 0; }
+    .auditor-section input, .auditor-section textarea { width: 100%; padding: 8px; margin: 5px 0 15px; background: #1a1a2e; border: 1px solid #333; border-radius: 4px; color: #fff; }
+    .auditor-section textarea { min-height: 80px; font-family: monospace; }
+    .signature-preview { background: #1a1a2e; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 11px; color: #75e6a0; word-break: break-all; }
 """)])
 
 DEMO_DIR = Path(__file__).parent
@@ -256,15 +272,105 @@ def get(agent_key: str):
 
 @rt("/")
 def get():
-    # Load policy and manifests
+    """Welcome screen"""
+    return Title("CBAAC - Cross-Border Agentic AI Compliance"), Main(
+        Div(
+            H1("🛂 CBAAC"),
+            P("Cross-Border Agentic AI Compliance", cls="tagline"),
+            Div(
+                P("""CBAAC is a protocol for verifying AI agent compliance across international borders. 
+                   As AI agents increasingly interact with each other to complete tasks, businesses need 
+                   assurance that partner agents meet regulatory requirements (GDPR, AI Act, APPI, PIPA) 
+                   and cultural standards."""),
+                P("""Using the NANDA AgentFacts extension, CBAAC enables demand-side verification — 
+                   your agents can automatically check the compliance credentials of other agents 
+                   before sharing data, creating market pressure for regulatory compliance."""),
+                cls="description"
+            ),
+            Div(
+                A(
+                    Div(
+                        Div("🔍", cls="icon"),
+                        H2("Verify Other Agents"),
+                        P("See how your internal travel booking agent verifies compliance of external agents before sharing customer data."),
+                        Span("Enter Demo →", cls="action"),
+                        cls="path-card"
+                    ),
+                    href="/demo"
+                ),
+                A(
+                    Div(
+                        Div("📝", cls="icon"),
+                        H2("Certify Your Agent"),
+                        P("Generate a CBAAC-compliant manifest for your agent by answering questionnaires for each jurisdiction you operate in."),
+                        Span("Start Certification →", cls="action"),
+                        cls="path-card"
+                    ),
+                    href="/certify"
+                ),
+                cls="path-cards"
+            ),
+            cls="welcome"
+        )
+    )
+
+@rt("/certify")
+def get():
+    """Direct link to certification questionnaire"""
+    return Title("CBAAC - Certify Your Agent"), Main(
+        Div(
+            H1("🛂 CBAAC"),
+            P("Cross-Border Agentic AI Compliance", cls="subtitle"),
+            A("← Back to Welcome", href="/", style="font-size:13px;"),
+            cls="header"
+        ),
+        Div(
+            H2("Agent Certification"),
+            P("Generate a CBAAC-compliant manifest for your agent by completing the questionnaire below."),
+            
+            Div(
+                H3("Step 1: Select Jurisdiction(s) & Certification Type"),
+                Form(
+                    Fieldset(
+                        Legend("Jurisdictions"),
+                        Label(Input(type="checkbox", name="jurisdiction", value="eu"), " 🇪🇺 European Union (GDPR + AI Act)"), Br(),
+                        Label(Input(type="checkbox", name="jurisdiction", value="japan"), " 🇯🇵 Japan (APPI + METI)"), Br(),
+                        Label(Input(type="checkbox", name="jurisdiction", value="korea"), " 🇰🇷 Korea (AI Basic Act + PIPA)"), Br(),
+                        Label(Input(type="checkbox", name="jurisdiction", value="cultural"), " 🌍 Cultural/Ethical Standards"), Br(),
+                    ),
+                    Fieldset(
+                        Legend("Certification Type"),
+                        Label(Input(type="radio", name="cert_type", value="third_party"), " 🟢 Third-party auditor (highest trust)"), Br(),
+                        Label(Input(type="radio", name="cert_type", value="auto_verified"), " 🟡 Auto-verified (automated compliance checks)"), Br(),
+                        Label(Input(type="radio", name="cert_type", value="self_certified", checked=True), " 🟠 Self-certified (attestation only)"), Br(),
+                        Label(Input(type="radio", name="cert_type", value="sign_to_code"), " 🔵 Sign-to-code (cryptographic proof)"), Br(),
+                    ),
+                    Br(),
+                    Button("Load Questions →", type="submit"),
+                    hx_post="/questionnaire/load", hx_target="#questionnaire-form"
+                ),
+                cls="section"
+            ),
+            
+            Div(id="questionnaire-form", style="margin-top:20px;"),
+        )
+    )
+
+@rt("/demo")
+def get():
+    my_agent_name = "Internal Travel Booker"
+    
+    # Load policy from file
     policy = load_json(DEMO_DIR / "company_a_policy.json")
+
+    
     agents = {
         "Agent B (Travel)": load_json(DEMO_DIR / "mock_agents/agent_b_travel.json"),
         "Agent C (Airline)": load_json(DEMO_DIR / "mock_agents/agent_c_airline.json"),
         "Agent D (Sketchy)": load_json(DEMO_DIR / "mock_agents/agent_d_sketchy.json"),
     }
     
-    # Check each agent
+    # Check each agent against user's policy
     results = {name: check_agent(m, policy) for name, m in agents.items()}
     
     # Overall chain result
@@ -274,7 +380,7 @@ def get():
     agent_keys = ["agent_b", "agent_c", "agent_d"]
     agent_list = list(agents.items())
     chain_items = [
-        Div(H3("Company A"), Div("(Your Agent)", cls="provider"), Span("ORIGIN", cls="badge green"), cls="agent-card"),
+        Div(H3(my_agent_name), Div("(Your Agent)", cls="provider"), Span("ORIGIN", cls="badge green"), cls="agent-card"),
     ]
     prev_passed = True  # Origin always passes
     for i, ((name, manifest), key) in enumerate(zip(agent_list, agent_keys)):
@@ -286,7 +392,13 @@ def get():
         Div(
             H1("🛂 CBAAC"),
             P("Cross-Border Agentic AI Compliance", cls="subtitle"),
+            A("← Back", href="/", style="font-size:12px;"),
             cls="header"
+        ),
+        
+        Div(
+            Span(f"Your Agent: {my_agent_name}", style="font-weight:bold; color:#00d4ff;"),
+            style="background:#0f0f23; padding:10px 15px; border-radius:6px; margin-bottom:20px; font-size:14px;"
         ),
         
         Div(
@@ -308,7 +420,7 @@ def get():
         Div(id="tab-chain", cls="tab-content active")(
         
         Div(
-            H2("Policy: ACME Corp"),
+            H2("Policy: SAMPLE_COMPANY_A"),
             Div(
                 P(f"Required jurisdictions: ", Code(", ".join(policy["regulatory_requirements"]["required_jurisdictions"]))),
                 P(f"Require GPAI compliance: ", Code(str(policy["model_provider_requirements"]["require_gpai_compliance"]))),
@@ -401,7 +513,7 @@ def get():
             
             Div(id="questionnaire-form", style="margin-top:20px;"),
         ),  # End TAB 2
-    )
+    )  # End Main
 
 @rt("/recheck")
 def post(require_gdpr: bool = False, require_ai_act: bool = False, require_gpai: bool = False, 
@@ -443,7 +555,7 @@ def post(require_gdpr: bool = False, require_ai_act: bool = False, require_gpai:
     agent_keys = ["agent_b", "agent_c", "agent_d"]
     agent_list = list(agents.items())
     chain_items = [
-        Div(H3("Company A"), Div("(Your Agent)", cls="provider"), Span("ORIGIN", cls="badge green"), cls="agent-card"),
+        Div(H3(my_agent_name), Div("(Your Agent)", cls="provider"), Span("ORIGIN", cls="badge green"), cls="agent-card"),
     ]
     prev_passed = True
     for i, ((name, manifest), key) in enumerate(zip(agent_list, agent_keys)):
@@ -493,6 +605,31 @@ def post(jurisdiction: str = None, cert_type: str = "self_certified"):
         P(f"Certification type: {cert_labels.get(cert_type, cert_type)}", style="color:#00d4ff; font-weight:bold;"),
     ]
     
+    # Add auditor section if third-party selected
+    if cert_type == "third_party":
+        form_fields.append(
+            Div(
+                H4("🔏 Auditor Information"),
+                P("As a third-party auditor, please provide your credentials:", style="color:#888; font-size:13px;"),
+                Label("Auditor Organization Name"),
+                Input(type="text", name="auditor_org", placeholder="e.g. TrustCert International", style="width:100%; padding:8px; margin-bottom:10px;"),
+                Label("Auditor DID (Decentralized Identifier)"),
+                Input(type="text", name="auditor_did", placeholder="e.g. did:web:trustcert.org", style="width:100%; padding:8px; margin-bottom:10px;"),
+                Label("Auditor Accreditation Number"),
+                Input(type="text", name="auditor_accreditation", placeholder="e.g. EU-AI-AUD-2024-0042", style="width:100%; padding:8px; margin-bottom:10px;"),
+                Label("Auditor Contact Email"),
+                Input(type="email", name="auditor_email", placeholder="auditor@trustcert.org", style="width:100%; padding:8px; margin-bottom:10px;"),
+                Hr(),
+                H4("🔐 Digital Signature"),
+                P("Paste your PEM-encoded signature or sign after generation:", style="color:#888; font-size:13px;"),
+                Label("Signature (will be generated or paste existing)"),
+                Textarea(name="auditor_signature", placeholder="-----BEGIN SIGNATURE-----\n...\n-----END SIGNATURE-----", style="width:100%; min-height:100px; font-family:monospace; padding:8px; margin-bottom:10px;"),
+                Label("Public Key URL (for verification)"),
+                Input(type="url", name="auditor_pubkey_url", placeholder="https://trustcert.org/.well-known/keys/auditor-2024.pub", style="width:100%; padding:8px;"),
+                cls="auditor-section"
+            )
+        )
+    
     for j in jurisdiction:
         if j not in juris_map:
             continue
@@ -510,17 +647,17 @@ def post(jurisdiction: str = None, cert_type: str = "self_certified"):
             
             for q in section.get("questions", []):
                 q_id = q.get("id", "")
-                q_text = q.get("question", "")
+                q_text = q.get("question", q.get("text", ""))
                 q_type = q.get("type", "boolean")
                 
                 if q_type == "boolean":
                     form_fields.append(
                         Div(
-                            Label(Input(type="checkbox", name=q_id), f" {q_text}"),
+                            Label(Input(type="checkbox", name=q_id, value="yes"), f" {q_text}"),
                             cls="question"
                         )
                     )
-                elif q_type in ["select", "multi_select"]:
+                elif q_type in ["select", "multi_select", "single_select"]:
                     options = [Option(o, value=o) for o in q.get("options", [])]
                     form_fields.append(
                         Div(
@@ -554,15 +691,18 @@ def post(jurisdiction: str = None, cert_type: str = "self_certified"):
         Form(
             *form_fields,
             hx_post="/questionnaire/generate",
-            hx_target="#questionnaire-form",
+            hx_target="#manifest-output",
             hx_swap="innerHTML"
         ),
+        Div(id="manifest-output"),
         cls="section"
     )
 
 @rt("/questionnaire/generate")
-def post(**kwargs):
+async def post(request):
     """Generate manifest from questionnaire answers"""
+    form = await request.form()
+    kwargs = dict(form)
     
     cert_type = kwargs.get("cert_type", "self_certified")
     jurisdictions_selected = kwargs.get("jurisdictions_selected", "").split(",")
@@ -624,9 +764,9 @@ def post(**kwargs):
     # Handle cultural if selected
     cultural_benchmarks = None
     if "cultural" in jurisdictions_selected:
-        cultural_responses = {k: v for k, v in kwargs.items() if k.startswith("cultural_")}
+        cultural_responses = {k: v for k, v in kwargs.items() if k.startswith(("cult_", "behav_"))}
         cultural_benchmarks = {
-            "tested_cultures": kwargs.get("cultural_cultures", "").split(",") if kwargs.get("cultural_cultures") else [],
+            "tested_cultures": kwargs.get("cult_02", []) if kwargs.get("cult_02") else [],
             "certified": len(cultural_responses) > 0,
             "certification_type": cert_type,
             "responses": cultural_responses
@@ -658,6 +798,17 @@ def post(**kwargs):
             "jurisdictions": jurisdictions,
             "cultural_benchmarks": cultural_benchmarks
         },
+        
+        "third_party_audit": {
+            "auditor_org": kwargs.get("auditor_org", ""),
+            "auditor_did": kwargs.get("auditor_did", ""),
+            "auditor_accreditation": kwargs.get("auditor_accreditation", ""),
+            "auditor_email": kwargs.get("auditor_email", ""),
+            "audit_date": datetime.now(timezone.utc).isoformat(),
+            "signature": kwargs.get("auditor_signature", ""),
+            "public_key_url": kwargs.get("auditor_pubkey_url", ""),
+            "verification_status": "signed" if kwargs.get("auditor_signature") else "pending"
+        } if is_third_party else None,
         
         "model_provider_compliance": {
             "provider_name": kwargs.get("model_provider", ""),
@@ -699,8 +850,11 @@ def post(**kwargs):
   "codebase_verification": { ... }
 }"""
     
+    received_count = len([k for k in kwargs.keys() if k.startswith(("gdpr_", "aiact_", "appi_", "meti_", "korea_", "pipa_", "cult_", "behav_"))])
+    
     return Div(
         H3("✓ Manifest Generated"),
+        P(f"Received {received_count} questionnaire responses", style="color:#888; font-size:13px;"),
         
         Div(
             Div(
