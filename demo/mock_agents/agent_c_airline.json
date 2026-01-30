@@ -26,7 +26,7 @@
         "attestation_date": "2025-12-01T00:00:00Z",
         "attestation_type": "third_party_audit",
         "auditor": "TechNova Partners",
-        "questionnaire_url": "../../questionnaires/eu-gdpr-aiact.json"
+        "questionnaire_url": "https://raw.githubusercontent.com/mattpagett/CBAAC/main/questionnaires/eu-gdpr-aiact.json"
       },
       {
         "jurisdiction": "Japan",
@@ -34,7 +34,7 @@
         "regulations": ["APPI", "METI Guidelines"],
         "attestation_date": "2025-11-15T00:00:00Z",
         "attestation_type": "self_certified",
-        "questionnaire_url": "../../questionnaires/japan-appi-meti.json"
+        "questionnaire_url": "https://raw.githubusercontent.com/mattpagett/CBAAC/main/questionnaires/japan-appi-meti.json"
       }
     ],
     "cultural_benchmarks": {

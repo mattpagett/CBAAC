@@ -25,7 +25,7 @@
         "regulations": ["GDPR", "EU AI Act"],
         "attestation_date": "2026-01-15T00:00:00Z",
         "attestation_type": "self_certified",
-        "questionnaire_url": "../../questionnaires/eu-gdpr-aiact.json"
+        "questionnaire_url": "https://raw.githubusercontent.com/mattpagett/CBAAC/main/questionnaires/eu-gdpr-aiact.json"
       }
     ],
     "cultural_benchmarks": null
