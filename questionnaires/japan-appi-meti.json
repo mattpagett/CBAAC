@@ -1,0 +1,276 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbaac.org/questionnaires/japan-appi-meti/v1",
+  "title": "Japan APPI & METI AI Guidelines Self-Certification Questionnaire",
+  "description": "Self-certification questionnaire for Japan regulatory compliance",
+  "version": "1.0.0",
+  
+  "metadata": {
+    "jurisdiction": "Japan",
+    "regulations": ["APPI (Act on Protection of Personal Information)", "METI AI Guidelines"],
+    "last_updated": "2026-01-30"
+  },
+
+  "sections": {
+    "meti_classification": {
+      "title": "METI AI Guideline Classification",
+      "questions": [
+        {
+          "id": "meti_01",
+          "question": "What is your METI AI Guideline category?",
+          "type": "select",
+          "options": ["Type 1 (Low risk)", "Type 2 (Limited risk)", "Type 3 (High risk)", "Type 4 (Unacceptable risk)"],
+          "required": true
+        },
+        {
+          "id": "meti_02",
+          "question": "Is this agent used in a critical infrastructure sector?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "meti_03",
+          "question": "Does the agent make decisions that significantly affect individuals?",
+          "type": "boolean",
+          "required": true
+        }
+      ]
+    },
+
+    "appi_data_handling": {
+      "title": "APPI - Personal Information Protection",
+      "questions": [
+        {
+          "id": "appi_01",
+          "question": "Does this agent handle personal information as defined by APPI?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "appi_02",
+          "question": "What categories of personal information are processed?",
+          "type": "multi_select",
+          "options": ["name", "address", "date_of_birth", "email", "phone", "employee_id", "my_number", "health_data", "biometric", "other"],
+          "required": true,
+          "condition": "appi_01 == true"
+        },
+        {
+          "id": "appi_03",
+          "question": "Does the agent process 'Special Care-Required Personal Information' (health, criminal records, etc.)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "appi_04",
+          "question": "Is explicit consent obtained before processing Special Care-Required information?",
+          "type": "boolean",
+          "required": true,
+          "condition": "appi_03 == true"
+        },
+        {
+          "id": "appi_05",
+          "question": "Has the purpose of use been specified and disclosed to data subjects?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "appi_06",
+          "question": "Is data used only within the scope of the disclosed purpose?",
+          "type": "boolean",
+          "required": true
+        }
+      ]
+    },
+
+    "data_sovereignty": {
+      "title": "Data Sovereignty & Cross-Border Transfer",
+      "questions": [
+        {
+          "id": "ds_01",
+          "question": "Where is data primarily stored?",
+          "type": "select",
+          "options": ["Japan", "EU", "USA", "China", "Other Asia", "Other"],
+          "required": true
+        },
+        {
+          "id": "ds_02",
+          "question": "Does the system comply with Japan's 'data-in, model-out' strategy?",
+          "type": "boolean",
+          "help_text": "Keeping sensitive data in Japan while allowing model inference",
+          "required": false
+        },
+        {
+          "id": "ds_03",
+          "question": "Is personal information transferred to a third party outside Japan?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "ds_04",
+          "question": "If cross-border transfer occurs, what safeguards are in place?",
+          "type": "select",
+          "options": ["Equivalent protection country", "Consent obtained", "Contractual safeguards", "APEC CBPR certification", "None"],
+          "required": true,
+          "condition": "ds_03 == true"
+        }
+      ]
+    },
+
+    "user_rights": {
+      "title": "APPI - Individual Rights",
+      "questions": [
+        {
+          "id": "rights_01",
+          "question": "Is there a mechanism for individuals to request disclosure of their personal information?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "rights_02",
+          "question": "Is there a mechanism for individuals to request correction of inaccurate information?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "rights_03",
+          "question": "Is there a mechanism for individuals to request deletion or cessation of use?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "rights_04",
+          "question": "What is the response timeframe for individual requests?",
+          "type": "number",
+          "unit": "days",
+          "required": true
+        }
+      ]
+    },
+
+    "transparency": {
+      "title": "Transparency & Disclosure",
+      "questions": [
+        {
+          "id": "trans_01",
+          "question": "Is it disclosed to users that they are interacting with an AI system?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "trans_02",
+          "question": "Is the AI decision-making process explainable to users?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "trans_03",
+          "question": "Is the business operator's identity and contact disclosed?",
+          "type": "boolean",
+          "required": true
+        }
+      ]
+    },
+
+    "security": {
+      "title": "Security Measures",
+      "questions": [
+        {
+          "id": "sec_01",
+          "question": "Are appropriate security control measures in place to prevent data leakage?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "sec_02",
+          "question": "Is there supervision over employees handling personal information?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "sec_03",
+          "question": "Is there supervision over contractors/subcontractors handling personal information?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "sec_04",
+          "question": "Is there an incident response and notification process?",
+          "type": "boolean",
+          "required": true
+        }
+      ]
+    },
+
+    "model_provider": {
+      "title": "AI Model Provider Information",
+      "questions": [
+        {
+          "id": "model_01",
+          "question": "What AI model/LLM powers this agent?",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "model_02",
+          "question": "Where is the model provider based?",
+          "type": "select",
+          "options": ["Japan", "EU", "USA", "China", "Other"],
+          "required": true
+        },
+        {
+          "id": "model_03",
+          "question": "Is the model provider compliant with GPAI/frontier safety requirements?",
+          "type": "select",
+          "options": ["Yes - certified", "Yes - self-declared", "No", "Unknown"],
+          "required": true
+        },
+        {
+          "id": "model_04",
+          "question": "Was the model trained on Japanese language/cultural data?",
+          "type": "boolean",
+          "help_text": "Relevant for cultural appropriateness assessment",
+          "required": false
+        }
+      ]
+    },
+
+    "sub_agents": {
+      "title": "Sub-Agent Compliance Chain",
+      "questions": [
+        {
+          "id": "sub_01",
+          "question": "Does this agent call other agents/services to complete tasks?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "sub_02",
+          "question": "List all sub-agents used",
+          "type": "array",
+          "items": {
+            "agent_id": "text",
+            "compliance_attestation_url": "url"
+          },
+          "required": true,
+          "condition": "sub_01 == true"
+        },
+        {
+          "id": "sub_03",
+          "question": "Are all sub-agents APPI compliant?",
+          "type": "boolean",
+          "required": true,
+          "condition": "sub_01 == true"
+        }
+      ]
+    }
+  },
+
+  "attestation": {
+    "certifier_name": "",
+    "certifier_role": "",
+    "organization": "",
+    "date": "",
+    "codebase_hash": "",
+    "signature": ""
+  }
+}

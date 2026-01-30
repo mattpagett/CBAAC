@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbaac.org/questionnaires/eu-gdpr-aiact/v1",
+  "title": "EU GDPR & AI Act Self-Certification Questionnaire",
+  "description": "Self-certification questionnaire for EU regulatory compliance (GDPR + AI Act)",
+  "version": "1.0.0",
+  
+  "metadata": {
+    "jurisdiction": "EU",
+    "regulations": ["GDPR", "EU AI Act", "Digital Services Act"],
+    "last_updated": "2026-01-30"
+  },
+
+  "sections": {
+    "gdpr_data_handling": {
+      "title": "GDPR - Data Handling",
+      "questions": [
+        {
+          "id": "gdpr_01",
+          "question": "What categories of personal data does this agent process?",
+          "type": "multi_select",
+          "options": ["name", "email", "phone", "address", "ip_address", "device_id", "location", "financial", "health", "biometric", "genetic", "political_opinions", "religious_beliefs", "trade_union", "sexual_orientation", "criminal_records", "none", "other"],
+          "required": true
+        },
+        {
+          "id": "gdpr_02",
+          "question": "Does this agent process special category data (Art. 9)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "gdpr_03",
+          "question": "What is the legal basis for processing (Art. 6)?",
+          "type": "single_select",
+          "options": ["consent", "contract", "legal_obligation", "vital_interests", "public_task", "legitimate_interests", "not_applicable"],
+          "required": true
+        },
+        {
+          "id": "gdpr_04",
+          "question": "Data retention period (days)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "gdpr_05",
+          "question": "Is data shared with third parties?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "gdpr_06",
+          "question": "If yes, list third parties",
+          "type": "text_array",
+          "required": false,
+          "depends_on": {"gdpr_05": true}
+        },
+        {
+          "id": "gdpr_07",
+          "question": "Is data transferred outside the EU?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "gdpr_08",
+          "question": "If yes, what transfer safeguards are in place?",
+          "type": "single_select",
+          "options": ["adequacy_decision", "standard_contractual_clauses", "binding_corporate_rules", "none"],
+          "required": false,
+          "depends_on": {"gdpr_07": true}
+        }
+      ]
+    },
+
+    "gdpr_user_rights": {
+      "title": "GDPR - User Rights (Arts. 15-22)",
+      "questions": [
+        {
+          "id": "gdpr_09",
+          "question": "Is there an endpoint for data access requests (Art. 15)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "gdpr_10",
+          "question": "Data access endpoint URL",
+          "type": "url",
+          "required": false,
+          "depends_on": {"gdpr_09": true}
+        },
+        {
+          "id": "gdpr_11",
+          "question": "Is there an endpoint for data erasure (Art. 17)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "gdpr_12",
+          "question": "Data erasure endpoint URL",
+          "type": "url",
+          "required": false,
+          "depends_on": {"gdpr_11": true}
+        },
+        {
+          "id": "gdpr_13",
+          "question": "Is there an endpoint for data portability (Art. 20)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "gdpr_14",
+          "question": "Response time for requests (days, max 30)",
+          "type": "number",
+          "max": 30,
+          "required": true
+        }
+      ]
+    },
+
+    "gdpr_governance": {
+      "title": "GDPR - Governance",
+      "questions": [
+        {
+          "id": "gdpr_15",
+          "question": "Data Protection Officer (DPO) contact email",
+          "type": "email",
+          "required": true
+        },
+        {
+          "id": "gdpr_16",
+          "question": "Data controller legal name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "gdpr_17",
+          "question": "Has a Data Protection Impact Assessment (DPIA) been completed?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "gdpr_18",
+          "question": "Are data processing agreements in place with all processors?",
+          "type": "boolean",
+          "required": true
+        }
+      ]
+    },
+
+    "ai_act_classification": {
+      "title": "EU AI Act - Risk Classification",
+      "questions": [
+        {
+          "id": "aiact_01",
+          "question": "Self-assessed risk classification",
+          "type": "single_select",
+          "options": ["minimal", "limited", "high", "prohibited"],
+          "required": true
+        },
+        {
+          "id": "aiact_02",
+          "question": "Is this a General Purpose AI (GPAI) system?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_03",
+          "question": "If GPAI, training compute (FLOPs)",
+          "type": "text",
+          "required": false,
+          "depends_on": {"aiact_02": true}
+        },
+        {
+          "id": "aiact_04",
+          "question": "Does this agent make automated decisions with legal/significant effects?",
+          "type": "boolean",
+          "required": true
+        }
+      ]
+    },
+
+    "ai_act_transparency": {
+      "title": "EU AI Act - Transparency (Art. 50)",
+      "questions": [
+        {
+          "id": "aiact_05",
+          "question": "Does the agent disclose to users that they are interacting with AI?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_06",
+          "question": "Is synthetic content (deepfakes, generated media) labeled?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_07",
+          "question": "Is emotion recognition disclosed to users?",
+          "type": "boolean",
+          "required": true
+        }
+      ]
+    },
+
+    "ai_act_logging": {
+      "title": "EU AI Act - Record Keeping",
+      "questions": [
+        {
+          "id": "aiact_08",
+          "question": "Is automatic event logging enabled?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_09",
+          "question": "Are logs tamper-evident?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_10",
+          "question": "Log retention period (days)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "id": "aiact_11",
+          "question": "Audit log URL (if publicly accessible)",
+          "type": "url",
+          "required": false
+        }
+      ]
+    },
+
+    "ai_act_oversight": {
+      "title": "EU AI Act - Human Oversight",
+      "questions": [
+        {
+          "id": "aiact_12",
+          "question": "Is human review available for AI decisions?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_13",
+          "question": "Is there a mechanism to stop/override the AI system?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_14",
+          "question": "Escalation endpoint URL",
+          "type": "url",
+          "required": false
+        }
+      ]
+    },
+
+    "ai_act_high_risk": {
+      "title": "EU AI Act - High-Risk Requirements",
+      "description": "Only required if risk_classification is 'high'",
+      "depends_on": {"aiact_01": "high"},
+      "questions": [
+        {
+          "id": "aiact_15",
+          "question": "Has conformity assessment been completed?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_16",
+          "question": "Does the system have CE marking?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_17",
+          "question": "Is the system registered in the EU database?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_18",
+          "question": "Is a quality management system in place?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "aiact_19",
+          "question": "Has bias/fairness testing been completed?",
+          "type": "boolean",
+          "required": true
+        }
+      ]
+    },
+
+    "security": {
+      "title": "Security Measures",
+      "questions": [
+        {
+          "id": "sec_01",
+          "question": "Is data encrypted at rest?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "sec_02",
+          "question": "Is data encrypted in transit (TLS)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "sec_03",
+          "question": "Is there access control (authentication/authorization)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "sec_04",
+          "question": "Is there a breach notification process (72h)?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "sec_05",
+          "question": "Security certifications held",
+          "type": "text_array",
+          "required": false
+        }
+      ]
+    },
+
+    "sub_agents": {
+      "title": "Sub-Agent Compliance",
+      "questions": [
+        {
+          "id": "sub_01",
+          "question": "Does this agent call other agents/services?",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "id": "sub_02",
+          "question": "List sub-agents and their compliance attestation URLs",
+          "type": "object_array",
+          "schema": {
+            "agent_id": "string",
+            "compliance_url": "url"
+          },
+          "required": false,
+          "depends_on": {"sub_01": true}
+        },
+        {
+          "id": "sub_03",
+          "question": "What LLM/GPAI model powers this agent?",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "sub_04",
+          "question": "Model provider compliance attestation URL",
+          "type": "url",
+          "required": false
+        }
+      ]
+    }
+  }
+}
