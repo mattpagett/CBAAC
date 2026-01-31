@@ -66,8 +66,8 @@ app, rt = fast_app(hdrs=[Style("""
     legend { color: #00d4ff; font-weight: bold; }
     label { color: #ccc; }
     a { color: #00d4ff; }
-    .detail-panel th, .detail-panel td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
-    .detail-panel th { background: #f0f0f0; }
+    .detail-panel th, .detail-panel td { text-align: left; padding: 8px; border-bottom: 1px solid #333; color: #ccc; }
+    .detail-panel th { background: #1a1a2e; color: #888; }
     .welcome { text-align: center; padding: 40px 20px; }
     .welcome h1 { font-size: 48px; color: #00d4ff; margin-bottom: 10px; }
     .welcome .tagline { font-size: 18px; color: #888; margin-bottom: 40px; }
@@ -282,7 +282,7 @@ def get():
                    As AI agents increasingly interact with each other to complete tasks, businesses need 
                    assurance that partner agents meet regulatory requirements (GDPR, AI Act, APPI, PIPA) 
                    and cultural standards."""),
-                P("""Using the NANDA AgentFacts extension, CBAAC enables demand-side verification — 
+                P("""Proposing an extension to theNANDA AgentFacts schema, CBAAC enables demand-side verification — 
                    your agents can automatically check the compliance credentials of other agents 
                    before sharing data, creating market pressure for regulatory compliance."""),
                 cls="description"
@@ -451,35 +451,6 @@ def get():
             id="detail-panel"
         ),
         
-        Div(
-            H2("Policy Editor"),
-            P("Adjust your company's agent interaction policy:"),
-            Form(
-                Fieldset(
-                    Legend("Regulatory Requirements"),
-                    Label(Input(type="checkbox", name="require_gdpr", checked=True), " Require GDPR compliance"),
-                    Br(),
-                    Label(Input(type="checkbox", name="require_ai_act", checked=True), " Require AI Act compliance"),
-                    Br(),
-                    Label(Input(type="checkbox", name="require_gpai", checked=True), " Require GPAI model attestation"),
-                    Br(),
-                    Label(Input(type="checkbox", name="require_hash", checked=True), " Require codebase hash verification"),
-                ),
-                Fieldset(
-                    Legend("Cultural Requirements"),
-                    Label(Input(type="checkbox", name="require_cultural", checked=False), " Require cultural benchmarks"),
-                ),
-                Fieldset(
-                    Legend("Sub-Agent Requirements"),
-                    Label(Input(type="checkbox", name="require_subagent_compliance", checked=True), " Require sub-agent compliance chain"),
-                ),
-                Button("Apply Policy & Re-check", type="submit"),
-                hx_post="/recheck",
-                hx_target="#chain-results",
-                hx_swap="innerHTML"
-            ),
-            cls="section", style="margin-top:30px;"
-        ),
         ),  # End TAB 1
         
         # TAB 2: Self-Certification Questionnaire
