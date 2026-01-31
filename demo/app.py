@@ -66,6 +66,9 @@ app, rt = fast_app(hdrs=[Style("""
     legend { color: #00d4ff; font-weight: bold; }
     label { color: #ccc; }
     a { color: #00d4ff; }
+    .scenario-btn { display: inline-block; padding: 8px 16px; margin-right: 10px; background: #1a1a2e; border: 1px solid #333; border-radius: 6px; color: #888; text-decoration: none; font-size: 13px; }
+    .scenario-btn:hover { background: #252542; color: #fff; }
+    .scenario-btn.active { background: #00d4ff; color: #000; border-color: #00d4ff; }
     .detail-panel th, .detail-panel td { text-align: left; padding: 8px; border-bottom: 1px solid #333; color: #ccc; }
     .detail-panel th { background: #1a1a2e; color: #888; }
     .welcome { text-align: center; padding: 40px 20px; }
@@ -337,13 +340,13 @@ def get():
                         Label(Input(type="checkbox", name="jurisdiction", value="japan"), " 🇯🇵 Japan (APPI + METI)"), Br(),
                         Label(Input(type="checkbox", name="jurisdiction", value="korea"), " 🇰🇷 Korea (AI Basic Act + PIPA)"), Br(),
                         Label(Input(type="checkbox", name="jurisdiction", value="cultural"), " 🌍 Cultural/Ethical Standards"), Br(),
+                        Label(Input(type="checkbox", name="jurisdiction", value="security"), " 🔐 Security Certifications"), Br(),
                     ),
                     Fieldset(
                         Legend("Certification Type"),
                         Label(Input(type="radio", name="cert_type", value="third_party"), " 🟢 Third-party auditor (highest trust)"), Br(),
-                        Label(Input(type="radio", name="cert_type", value="auto_verified"), " 🟡 Auto-verified (automated compliance checks)"), Br(),
+Label(Input(type="radio", name="cert_type", value="auto_verified"), " 🟡 Auto-verified (prefills demo data)"), Br(),
                         Label(Input(type="radio", name="cert_type", value="self_certified", checked=True), " 🟠 Self-certified (attestation only)"), Br(),
-                        Label(Input(type="radio", name="cert_type", value="sign_to_code"), " 🔵 Sign-to-code (cryptographic proof)"), Br(),
                     ),
                     Br(),
                     Button("Load Questions →", type="submit"),
@@ -357,18 +360,26 @@ def get():
     )
 
 @rt("/demo")
-def get():
+def get(scenario: str = "mixed"):
     my_agent_name = "Internal Travel Booker"
     
     # Load policy from file
     policy = load_json(DEMO_DIR / "company_a_policy.json")
 
-    
-    agents = {
-        "Agent B (Travel)": load_json(DEMO_DIR / "mock_agents/agent_b_travel.json"),
-        "Agent C (Airline)": load_json(DEMO_DIR / "mock_agents/agent_c_airline.json"),
-        "Agent D (Sketchy)": load_json(DEMO_DIR / "mock_agents/agent_d_sketchy.json"),
-    }
+    # Scenario-based agent selection
+    if scenario == "compliant":
+        agents = {
+            "Agent B (Travel)": load_json(DEMO_DIR / "mock_agents/agent_b_travel.json"),
+            "Agent C (Airline)": load_json(DEMO_DIR / "mock_agents/agent_c_airline.json"),
+        }
+        agent_keys = ["agent_b", "agent_c"]
+    else:  # mixed (default) - includes non-compliant agent
+        agents = {
+            "Agent B (Travel)": load_json(DEMO_DIR / "mock_agents/agent_b_travel.json"),
+            "Agent C (Airline)": load_json(DEMO_DIR / "mock_agents/agent_c_airline.json"),
+            "Agent D (Sketchy)": load_json(DEMO_DIR / "mock_agents/agent_d_sketchy.json"),
+        }
+        agent_keys = ["agent_b", "agent_c", "agent_d"]
     
     # Check each agent against user's policy
     results = {name: check_agent(m, policy) for name, m in agents.items()}
@@ -377,7 +388,6 @@ def get():
     chain_pass = all(r["pass"] for r in results.values())
     
     # Build chain visualization with colored arrows
-    agent_keys = ["agent_b", "agent_c", "agent_d"]
     agent_list = list(agents.items())
     chain_items = [
         Div(H3(my_agent_name), Div("(Your Agent)", cls="provider"), Span("ORIGIN", cls="badge green"), cls="agent-card"),
@@ -432,6 +442,14 @@ def get():
         
         Div(
             H2("Agent Chain"),
+            Div(
+                Span("Scenario: ", style="margin-right:10px; color:#888;"),
+                A("✅ Compliant Chain", href="/demo?scenario=compliant", 
+                  cls="scenario-btn" + (" active" if scenario == "compliant" else "")),
+                A("⚠️ Mixed Chain", href="/demo?scenario=mixed",
+                  cls="scenario-btn" + (" active" if scenario == "mixed" else "")),
+                style="margin-bottom:15px;"
+            ),
             summary_bar(results),
             Div(
                 Div(*chain_items, cls="chain"),
@@ -467,13 +485,13 @@ def get():
                         Label(Input(type="checkbox", name="jurisdiction", value="japan"), " 🇯🇵 Japan (APPI + METI)"), Br(),
                         Label(Input(type="checkbox", name="jurisdiction", value="korea"), " 🇰🇷 Korea (AI Basic Act + PIPA)"), Br(),
                         Label(Input(type="checkbox", name="jurisdiction", value="cultural"), " 🌍 Cultural/Ethical Standards"), Br(),
+                        Label(Input(type="checkbox", name="jurisdiction", value="security"), " 🔐 Security Certifications"), Br(),
                     ),
                     Fieldset(
                         Legend("Certification Type"),
                         Label(Input(type="radio", name="cert_type", value="third_party"), " 🟢 Third-party auditor (highest trust)"), Br(),
-                        Label(Input(type="radio", name="cert_type", value="auto_verified", checked=True), " 🟡 Auto-verified (automated compliance checks)"), Br(),
+Label(Input(type="radio", name="cert_type", value="auto_verified", checked=True), " 🟡 Auto-verified (prefills demo data)"), Br(),
                         Label(Input(type="radio", name="cert_type", value="self_certified"), " 🟠 Self-certified (attestation only)"), Br(),
-                        Label(Input(type="radio", name="cert_type", value="sign_to_code"), " 🔵 Sign-to-code (cryptographic proof)"), Br(),
                     ),
                     Br(),
                     Button("Load Questions →", type="submit"),
@@ -560,7 +578,8 @@ def post(jurisdiction: str = None, cert_type: str = "self_certified"):
         "eu": ("eu-gdpr-aiact.json", "🇪🇺 EU GDPR & AI Act"),
         "japan": ("japan-appi-meti.json", "🇯🇵 Japan APPI & METI"),
         "korea": ("korea-ai-basic-act.json", "🇰🇷 Korea AI Basic Act"),
-        "cultural": ("cultural-ethical.json", "🌍 Cultural & Ethical")
+        "cultural": ("cultural-ethical.json", "🌍 Cultural & Ethical"),
+        "security": ("security-certifications.json", "🔐 Security Certifications")
     }
     
     cert_labels = {
@@ -575,6 +594,14 @@ def post(jurisdiction: str = None, cert_type: str = "self_certified"):
         Input(type="hidden", name="jurisdictions_selected", value=",".join(jurisdiction)),
         P(f"Certification type: {cert_labels.get(cert_type, cert_type)}", style="color:#00d4ff; font-weight:bold;"),
     ]
+    
+    if cert_type == "auto_verified":
+        form_fields.append(
+            Div(
+                "⚠️ Demo Mode: Data below is auto-prefilled for testing purposes. This is mock functionality for demonstration only.",
+                style="background:#ff9800; color:#000; padding:10px 15px; border-radius:6px; margin:10px 0; font-size:13px;"
+            )
+        )
     
     # Add auditor section if third-party selected
     if cert_type == "third_party":
@@ -621,15 +648,18 @@ def post(jurisdiction: str = None, cert_type: str = "self_certified"):
                 q_text = q.get("question", q.get("text", ""))
                 q_type = q.get("type", "boolean")
                 
+                # Auto-prefill for demo
+                is_auto = cert_type == "auto_verified"
+                
                 if q_type == "boolean":
                     form_fields.append(
                         Div(
-                            Label(Input(type="checkbox", name=q_id, value="yes"), f" {q_text}"),
+                            Label(Input(type="checkbox", name=q_id, value="yes", checked=is_auto), f" {q_text}"),
                             cls="question"
                         )
                     )
                 elif q_type in ["select", "multi_select", "single_select"]:
-                    options = [Option(o, value=o) for o in q.get("options", [])]
+                    options = [Option(o, value=o, selected=(is_auto and i==0)) for i, o in enumerate(q.get("options", []))]
                     form_fields.append(
                         Div(
                             Label(q_text),
@@ -638,10 +668,11 @@ def post(jurisdiction: str = None, cert_type: str = "self_certified"):
                         )
                     )
                 elif q_type in ["text", "url", "email"]:
+                    prefill = "https://sample.test/demo" if is_auto and q_type == "url" else ("demo@sample.test" if is_auto and q_type == "email" else ("Demo value" if is_auto else ""))
                     form_fields.append(
                         Div(
                             Label(q_text),
-                            Input(type=q_type, name=q_id, style="width:100%; padding:8px;"),
+                            Input(type=q_type, name=q_id, value=prefill, style="width:100%; padding:8px;"),
                             cls="question"
                         )
                     )
@@ -649,7 +680,7 @@ def post(jurisdiction: str = None, cert_type: str = "self_certified"):
                     form_fields.append(
                         Div(
                             Label(q_text),
-                            Input(type="number", name=q_id, style="width:100px; padding:8px;"),
+                            Input(type="number", name=q_id, value="100" if is_auto else "", style="width:100px; padding:8px;"),
                             cls="question"
                         )
                     )
@@ -735,7 +766,7 @@ async def post(request):
     # Handle cultural if selected
     cultural_benchmarks = None
     if "cultural" in jurisdictions_selected:
-        cultural_responses = {k: v for k, v in kwargs.items() if k.startswith(("cult_", "behav_"))}
+        cultural_responses = {k: v for k, v in kwargs.items() if k.startswith(("cult_", "behav_", "coop_"))}
         cultural_benchmarks = {
             "tested_cultures": kwargs.get("cult_02", []) if kwargs.get("cult_02") else [],
             "certified": len(cultural_responses) > 0,
@@ -770,6 +801,47 @@ async def post(request):
             "cultural_benchmarks": cultural_benchmarks
         },
         
+        "security_certifications": {
+            "iso_42001": {
+                "certified": kwargs.get("sec_iso_01") == "yes",
+                "certification_body": kwargs.get("sec_iso_02", ""),
+                "certificate_url": kwargs.get("sec_iso_03", ""),
+                "valid_until": kwargs.get("sec_iso_04", "")
+            } if kwargs.get("sec_iso_01") else None,
+            "nist_ai_rmf": {
+                "aligned": kwargs.get("sec_nist_01") == "yes",
+                "ai_600_1_assessed": kwargs.get("sec_nist_02") == "yes",
+                "functions_implemented": kwargs.get("sec_nist_03", []),
+                "report_url": kwargs.get("sec_nist_04", "")
+            } if kwargs.get("sec_nist_01") else None,
+            "mlcommons_ailuminate": {
+                "tested": kwargs.get("sec_mlc_01") == "yes",
+                "safety_grade": kwargs.get("sec_mlc_02", ""),
+                "jailbreak_tested": kwargs.get("sec_mlc_03") == "yes",
+                "test_date": kwargs.get("sec_mlc_04", ""),
+                "report_url": kwargs.get("sec_mlc_05", "")
+            } if kwargs.get("sec_mlc_01") else None,
+            "owasp_llm_top10": {
+                "tested": kwargs.get("sec_owasp_01") == "yes",
+                "vulnerabilities_tested": kwargs.get("sec_owasp_02", []),
+                "vulnerabilities_found": int(kwargs.get("sec_owasp_03", 0) or 0),
+                "report_url": kwargs.get("sec_owasp_04", "")
+            } if kwargs.get("sec_owasp_01") else None,
+            "singapore_ai_verify": {
+                "tested": kwargs.get("sec_sgv_01") == "yes",
+                "principles_tested": kwargs.get("sec_sgv_02", []),
+                "report_url": kwargs.get("sec_sgv_03", "")
+            } if kwargs.get("sec_sgv_01") else None,
+            "red_team_testing": {
+                "tested": kwargs.get("sec_red_01") == "yes",
+                "tester_type": kwargs.get("sec_red_02", ""),
+                "tester_name": kwargs.get("sec_red_03", ""),
+                "prompt_injection_resistant": kwargs.get("sec_red_04") == "yes",
+                "jailbreak_resistant": kwargs.get("sec_red_05") == "yes",
+                "test_date": kwargs.get("sec_red_06", "")
+            } if kwargs.get("sec_red_01") else None
+        } if "security" in jurisdictions_selected else None,
+        
         "third_party_audit": {
             "auditor_org": kwargs.get("auditor_org", ""),
             "auditor_did": kwargs.get("auditor_did", ""),
@@ -801,27 +873,39 @@ async def post(request):
     
     manifest_json = json.dumps(manifest, indent=2)
     
-    # Show side-by-side: Your manifest + where it fits in NANDA
+    # Build NANDA example - just summary flags + link to full manifest
+    jurisdictions = manifest.get("compliance_attestations", {}).get("jurisdictions", [])
+    has_eu = any(j.get("jurisdiction") == "EU" for j in jurisdictions)
+    has_japan = any(j.get("jurisdiction") == "Japan" for j in jurisdictions)
+    has_korea = any(j.get("jurisdiction") == "Korea" for j in jurisdictions)
+    has_cultural = manifest.get("compliance_attestations", {}).get("cultural_benchmarks") is not None
+    has_security = manifest.get("security_certifications") is not None
+    
     nanda_example = """{
   // Standard NANDA AgentFacts fields
   "id": "nanda:your-agent-001",
-  "agent_name": "urn:agent:yourcompany:YourAgent",
+  "agent_name": "urn:agent:yourcompany:YourAgent", 
   "label": "Your Agent",
-  "provider": { ... },
-  "endpoints": { ... },
-  "capabilities": { ... },
-  "skills": [ ... ],
+  "provider": { "name": "...", "url": "..." },
+  "endpoints": { "static": ["https://..."] },
+  "capabilities": { "..." },
+  "skills": [ "..." ],
   
   // 🆕 CBAAC Compliance Extension
-  "compliance_attestations": {    ← YOUR COMPLIANCE DATA
-    "jurisdictions": [ ... ],
-    "cultural_benchmarks": { ... }
+  "cbaac_compliance": {
+    "eu_compliant": """ + str(has_eu).lower() + """,
+    "japan_compliant": """ + str(has_japan).lower() + """,
+    "korea_compliant": """ + str(has_korea).lower() + """,
+    "cultural_certified": """ + str(has_cultural).lower() + """,
+    "security_certified": """ + str(has_security).lower() + """,
+    "full_manifest_url": "https://yourcompany.com/.well-known/cbaac-compliance.json"
   },
-  "model_provider_compliance": { ... },
-  "codebase_verification": { ... }
+  
+  "model_provider_compliance": { "..." },
+  "codebase_verification": { "..." }
 }"""
     
-    received_count = len([k for k in kwargs.keys() if k.startswith(("gdpr_", "aiact_", "appi_", "meti_", "korea_", "pipa_", "cult_", "behav_"))])
+    received_count = len([k for k in kwargs.keys() if k.startswith(("gdpr_", "aiact_", "appi_", "meti_", "korea_", "pipa_", "cult_", "behav_", "coop_", "sec_"))])
     
     return Div(
         H3("✓ Manifest Generated"),

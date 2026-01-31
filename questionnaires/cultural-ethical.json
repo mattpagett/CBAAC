@@ -177,6 +177,52 @@
           "depends_on": {"ethics_03": true}
         }
       ]
+    },
+    
+    "cooperative_alignment": {
+      "title": "Cooperative AI Alignment",
+      "description": "Assessment of cooperative vs compliance-focused AI governance orientation",
+      "questions": [
+        {
+          "id": "coop_01",
+          "text": "Is the AI designed to empower users to solve problems independently, rather than solving problems for them?",
+          "type": "boolean",
+          "required": false,
+          "help_text": "Change Agent orientation: AI as enabler vs. controller"
+        },
+        {
+          "id": "coop_02",
+          "text": "Does the AI system incorporate feedback mechanisms for stakeholder input on system behavior?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "coop_03",
+          "text": "Has the cultural origin of training data been disclosed to users?",
+          "type": "boolean",
+          "required": false,
+          "help_text": "Algorithmic imprint transparency"
+        },
+        {
+          "id": "coop_04",
+          "text": "Does the system respect data sovereignty requirements (e.g., data-in, model-out)?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "coop_05",
+          "text": "Is there a shared accountability model between AI provider and deployer for outcomes?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "coop_06",
+          "text": "Does the AI aim to preserve cultural diversity rather than impose universal standards?",
+          "type": "boolean",
+          "required": false,
+          "help_text": "Multipolar alignment orientation"
+        }
+      ]
     }
   },
 
