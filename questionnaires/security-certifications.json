@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cbaac.org/questionnaires/security-certifications/v1",
+  "title": "Security Certifications Self-Attestation Questionnaire",
+  "description": "Self-attestation questionnaire for AI security certifications and benchmarks",
+  "version": "1.0.0",
+  
+  "metadata": {
+    "type": "security",
+    "purpose": "Technical security and safety attestations",
+    "last_updated": "2026-01-31"
+  },
+
+  "sections": {
+    "iso_42001": {
+      "title": "ISO/IEC 42001 - AI Management System",
+      "description": "The first certifiable international standard for AI governance",
+      "questions": [
+        {
+          "id": "sec_iso_01",
+          "text": "Is your AI system ISO/IEC 42001 certified?",
+          "type": "boolean",
+          "required": false,
+          "high_trust": true
+        },
+        {
+          "id": "sec_iso_02",
+          "text": "Certification body name",
+          "type": "text",
+          "placeholder": "e.g. BSI, TÜV, Bureau Veritas",
+          "depends_on": {"sec_iso_01": true}
+        },
+        {
+          "id": "sec_iso_03",
+          "text": "Certificate URL or reference number",
+          "type": "text",
+          "placeholder": "https://... or certificate ID",
+          "depends_on": {"sec_iso_01": true}
+        },
+        {
+          "id": "sec_iso_04",
+          "text": "Certificate valid until",
+          "type": "date",
+          "depends_on": {"sec_iso_01": true}
+        }
+      ]
+    },
+
+    "nist_ai_rmf": {
+      "title": "NIST AI RMF & AI 600-1",
+      "description": "US National Institute of Standards and Technology AI Risk Management Framework",
+      "questions": [
+        {
+          "id": "sec_nist_01",
+          "text": "Is your AI system aligned with NIST AI RMF?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "sec_nist_02",
+          "text": "Have you completed NIST AI 600-1 (Generative AI Profile) assessment?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "sec_nist_03",
+          "text": "Which NIST AI RMF functions have been implemented?",
+          "type": "multi_select",
+          "options": ["Govern", "Map", "Measure", "Manage"],
+          "depends_on": {"sec_nist_01": true}
+        },
+        {
+          "id": "sec_nist_04",
+          "text": "Assessment report URL (if available)",
+          "type": "text",
+          "placeholder": "https://...",
+          "depends_on": {"sec_nist_01": true}
+        }
+      ]
+    },
+
+    "mlcommons_ailuminate": {
+      "title": "MLCommons AILuminate",
+      "description": "Standardized safety and jailbreak resistance benchmarks",
+      "questions": [
+        {
+          "id": "sec_mlc_01",
+          "text": "Has your AI been tested with MLCommons AILuminate?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "sec_mlc_02",
+          "text": "AILuminate safety grade",
+          "type": "single_select",
+          "options": ["ML (Very Low Risk)", "L (Low Risk)", "M (Moderate Risk)", "H (High Risk)", "MH (Very High Risk)"],
+          "depends_on": {"sec_mlc_01": true}
+        },
+        {
+          "id": "sec_mlc_03",
+          "text": "Has jailbreak resistance been tested?",
+          "type": "boolean",
+          "depends_on": {"sec_mlc_01": true}
+        },
+        {
+          "id": "sec_mlc_04",
+          "text": "Test date",
+          "type": "date",
+          "depends_on": {"sec_mlc_01": true}
+        },
+        {
+          "id": "sec_mlc_05",
+          "text": "Test report URL",
+          "type": "text",
+          "placeholder": "https://...",
+          "depends_on": {"sec_mlc_01": true}
+        }
+      ]
+    },
+
+    "owasp_llm": {
+      "title": "OWASP Top 10 for LLM Applications",
+      "description": "Security vulnerability testing for prompt injection, data leakage, and excessive agency",
+      "questions": [
+        {
+          "id": "sec_owasp_01",
+          "text": "Has your AI been tested against OWASP Top 10 for LLM Applications?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "sec_owasp_02",
+          "text": "Which vulnerabilities have been tested?",
+          "type": "multi_select",
+          "options": [
+            "LLM01: Prompt Injection",
+            "LLM02: Insecure Output Handling", 
+            "LLM03: Training Data Poisoning",
+            "LLM04: Model Denial of Service",
+            "LLM05: Supply Chain Vulnerabilities",
+            "LLM06: Sensitive Information Disclosure",
+            "LLM07: Insecure Plugin Design",
+            "LLM08: Excessive Agency",
+            "LLM09: Overreliance",
+            "LLM10: Model Theft"
+          ],
+          "depends_on": {"sec_owasp_01": true}
+        },
+        {
+          "id": "sec_owasp_03",
+          "text": "Number of vulnerabilities found",
+          "type": "number",
+          "depends_on": {"sec_owasp_01": true}
+        },
+        {
+          "id": "sec_owasp_04",
+          "text": "Test report URL",
+          "type": "text",
+          "placeholder": "https://...",
+          "depends_on": {"sec_owasp_01": true}
+        }
+      ]
+    },
+
+    "singapore_ai_verify": {
+      "title": "Singapore AI Verify",
+      "description": "Government-developed testing framework for fairness, explainability, and robustness",
+      "questions": [
+        {
+          "id": "sec_sgv_01",
+          "text": "Has your AI been tested with Singapore AI Verify?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "sec_sgv_02",
+          "text": "Which principles have been tested?",
+          "type": "multi_select",
+          "options": ["Transparency", "Fairness", "Explainability", "Safety", "Robustness", "Accountability", "Human Agency"],
+          "depends_on": {"sec_sgv_01": true}
+        },
+        {
+          "id": "sec_sgv_03",
+          "text": "AI Verify report URL",
+          "type": "text",
+          "placeholder": "https://...",
+          "depends_on": {"sec_sgv_01": true}
+        }
+      ]
+    },
+
+    "red_team_testing": {
+      "title": "Red Team Testing",
+      "description": "Adversarial testing for security vulnerabilities",
+      "questions": [
+        {
+          "id": "sec_red_01",
+          "text": "Has your AI undergone red team testing?",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "id": "sec_red_02",
+          "text": "Red team tester",
+          "type": "single_select",
+          "options": ["Internal team", "Third-party (named)", "Bug bounty program"],
+          "depends_on": {"sec_red_01": true}
+        },
+        {
+          "id": "sec_red_03",
+          "text": "Third-party tester name (if applicable)",
+          "type": "text",
+          "placeholder": "e.g. NCC Group, Trail of Bits",
+          "depends_on": {"sec_red_01": true}
+        },
+        {
+          "id": "sec_red_04",
+          "text": "Is the system resistant to prompt injection attacks?",
+          "type": "boolean",
+          "depends_on": {"sec_red_01": true}
+        },
+        {
+          "id": "sec_red_05",
+          "text": "Is the system resistant to jailbreak attempts?",
+          "type": "boolean",
+          "depends_on": {"sec_red_01": true}
+        },
+        {
+          "id": "sec_red_06",
+          "text": "Test date",
+          "type": "date",
+          "depends_on": {"sec_red_01": true}
+        }
+      ]
+    }
+  },
+
+  "trust_tiers": {
+    "description": "Security certifications contribute to trust tiers",
+    "high_trust": ["ISO/IEC 42001 certified", "Third-party red team tested", "MLCommons grade ML or L"],
+    "medium_trust": ["NIST AI RMF aligned", "OWASP tested (0 vulns)", "AI Verify tested"],
+    "basic_trust": ["Self-attested security practices", "Internal red team only"]
+  }
+}
