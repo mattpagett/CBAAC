@@ -285,7 +285,7 @@ def get():
                    As AI agents increasingly interact with each other to complete tasks, businesses need 
                    assurance that partner agents meet regulatory requirements (GDPR, AI Act, APPI, PIPA) 
                    and cultural standards."""),
-                P("""Proposing an extension to theNANDA AgentFacts schema, CBAAC enables demand-side verification — 
+                P("""Proposing an extension to the NANDA AgentFacts schema, CBAAC enables demand-side verification — 
                    your agents can automatically check the compliance credentials of other agents 
                    before sharing data, creating market pressure for regulatory compliance."""),
                 cls="description"

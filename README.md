@@ -5,7 +5,7 @@
 A protocol for AI agents to verify compliance with regulatory requirements (GDPR, EU AI Act, Japan APPI/METI, Korea AI Basic Act), security certifications (ISO 42001, NIST AI RMF, OWASP), and cultural/ethical standards across multi-agent chains.
 
 **Demo:** https://cross-border-agentic-compliance.solve.it.com/  
-**Paper:** See `docs/paper.md`
+**Paper:** [Hackathon Submission](https://github.com/mattpagett/CBAAC/blob/main/docs/Cross%20Border%20Agentic%20Compliance%20Matt%20Pagett%20Tomoko%20Mitsuoka%20Feb%201%202026%20Apart%20Hackathon.pdf)
 
 ## The Problem
 
